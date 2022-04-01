@@ -9,6 +9,8 @@
     "start": "webpack-dev-server --open-page quill.html"
   },
   "dependencies": {
+    "@types/quill": "2.0.3",
+    "do_username": "^0.0.2",
     "quill": "^1.3.7",
     "quill-cursors": "^2.2.1",
     "webpack": "^4.46.0",
