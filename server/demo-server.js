@@ -6,6 +6,7 @@ const WebSocket = require('ws')
 const http = require('http')
 const StaticServer = require('node-static').Server
 const setupWSConnection = require('y-websocket/bin/utils.js').setupWSConnection
+const ydoc = require('y-websocket/bin/utils.js').getYDoc 
 
 const production = process.env.PRODUCTION != null
 const port = process.env.PORT || 8080
@@ -19,11 +20,14 @@ const server = http.createServer((request, response) => {
 })
 const wss = new WebSocket.Server({ server })
 
-wss.on('connection', (conn, req) => {
-  console.log(conn)
-  setupWSConnection(conn, req, { gc: req.url.slice(1) !== 'prosemirror-versions' })
+wss.on('connection', (...args)=>{
+  setupWSConnection(...args)
 })
 
+server.on('upgrade', (request, socket, head) => {
+  console.log("event")
+  
+})
 
 server.listen(port)
 
