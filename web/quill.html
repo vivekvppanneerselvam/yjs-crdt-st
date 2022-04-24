@@ -4,13 +4,22 @@
 <head>
   <meta charset="utf-8" />
   <title>Yjs Quill Example</title>
-  <script type="text/javascript" src="./dist/quill.bundle.js" async></script>
+
   <link rel=stylesheet href="./quill.css" async defer>
   <link rel=stylesheet href="//cdn.quilljs.com/1.3.6/quill.snow.css" async defer>
   <link rel=stylesheet href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" async defer>
   <link rel=stylesheet href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css" async
     defer>
-
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <script type="text/javascript" src="./dist/quill.bundle.js" async></script>
   <style>
     #users {
       font-weight: bold;
@@ -25,31 +34,102 @@
     #docs> :nth-child(2) {
       font-weight: bold;
     }
+
+    body {
+      font-family: Arial;
+    }
+
+    /* Style the tab */
+    .tab {
+      overflow: hidden;
+      border: 1px solid #ccc;
+      background-color: #f1f1f1;
+    }
+
+    /* Style the buttons inside the tab */
+    .tab button {
+      background-color: inherit;
+      float: left;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 14px 16px;
+      transition: 0.3s;
+      font-size: 17px;
+    }
+
+    /* Change background color of buttons on hover */
+    .tab button:hover {
+      background-color: #ddd;
+    }
+
+    /* Create an active/current tablink class */
+    .tab button.active {
+      background-color: #ccc;
+    }
+
+    /* Style the tab content */
+    .tabcontent {
+      display: none;
+      padding: 6px 12px;
+      border: 1px solid #ccc;
+      border-top: none;
+    }
   </style>
+  <script>
+    function openCity(evt, cityName) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(cityName).style.display = "block";
+      evt.currentTarget.className += " active";
+      
+
+    }
+    
+  </script>
 </head>
 
 <body>
-  <button type="button" id="y-off-btn">Save to Indexed DB</button>
 
-  <button type="button" id="y-connect-btn">Disconnect</button>
-  <div><span id="connStatus"> </span></div>
-  <p></p>
-  <p>This is a demo of the <a href="https://github.com/yjs/yjs">Yjs</a> ⇔ <a href="https://quilljs.com/">Quill</a>
-    binding: <a href="https://github.com/yjs/y-quill">y-quill</a>.</p>
-  <p>The content of this editor is shared with every client that visits this domain.</p>
+  <div class="tab">
+    <button class="tablinks" onclick="openCity(event, 'London')">Yjs</button>
+    <button class="tablinks" onclick="openCity(event, 'Paris')">Automerge</button>
 
-  <label for="username">Your username</label>
-  <input id="username" type="text" />
-  <div id="latencyDiv">latency<span id="latency"></span></div>
-  <div id="diffInMs">Difference in Milli seconds<span id="latency"></span></div>
-  <div id="users"></div>
-
-  <div id="docs"></div>
-
-  <div id="editor"></div>
-
-  <button type="button"  id="retrieve">Fetch</button>
+  </div>
+  <div id="London" class="tabcontent">
+    <h3>YJS Project</h3>
+    <h4> To be in an online</h4>
+    <div>y-Websocket Connection: <button type="btn btn-danger rounded-0" id="y-connect-btn">Disconnect</button></div>
+    <div><span>Connection Status:</span><span id="connStatus"> </span></div>
+    <h4>To collect data & be offline</h4>
+    <div>y-Indexed DB <button class="btn btn-primary rounded-0" id="y-off-btn">Save</button> <button
+        class="btn btn-danger rounded-0" type="button" id="retrieve">Retrieve</button></div>
     <div><span id="retrieved"> </span></div>
+
+    <br />
+    <p>The content of this editor is shared with every client that visits this domain.</p>
+    <br />
+    <label for="username">Your Username</label>
+    <div><input id="username" type="text" />
+      <div id="latencyDiv">Date & Time: &nbsp;<span id="latency"></span></div>
+      <div id="">Latency Diff. in Milli seconds :&nbsp; <span id="diffInMs"></span></div>
+    </div>
+    <div id="users"></div>
+    <div id="docs"></div>
+    <div id="editor"></div>
+  </div>
+  <div id="Paris" class="tabcontent">
+    <div id='content'>
+      <textarea type="text" id="input" value="" ></textarea>
+    </div>
+  </div>
 </body>
 
 </html>

@@ -14,8 +14,7 @@ Quill.register('modules/cursors', QuillCursors)
 
 window.addEventListener('load', () => {
   const ydoc = new Y.Doc()
-  const provider = new WebsocketProvider('ws://192.168.1.7:8080', 'quill-demo-2', ydoc)
-  var offlineFlg = false
+  const provider = new WebsocketProvider('ws://192.168.1.5:8080', 'quill-demo-2', ydoc)
   const offlineProvider = new IndexeddbPersistence('quill-demo-2', ydoc)
   const awareness = provider.awareness
   const documentList = ydoc.getArray('doc-list')
@@ -42,24 +41,7 @@ window.addEventListener('load', () => {
 
   provider.on('synced', () => {
     console.log('synced!')
-  })
-
-
-  // const editor = new Quill(editorContainer, {
-  //   modules: {
-  //     cursors: true,
-  //     toolbar: [
-  //       [{ header: [1, 2, false] }],
-  //       ['bold', 'italic', 'underline'],
-  //       ['image', 'code-block']
-  //     ],
-  //     history: {
-  //       userOnly: true
-  //     }
-  //   },
-  //   placeholder: 'Start collaborating...',
-  //   theme: 'snow' // or 'bubble'
-  // })
+  }) 
 
   let quill = null
   let binding = null
@@ -114,14 +96,13 @@ window.addEventListener('load', () => {
         binding.destroy()
       }
       if (quill) {
-
         quill.setContents('')
       }
     }
   }
 
   // render initial docs list
-  //renderDocs()
+  renderDocs()
   // every time a document is added, we rerender the list of documents.
   documentList.observe(renderDocs)
 
@@ -129,6 +110,7 @@ window.addEventListener('load', () => {
     //console.log(event)
     const pressedButton = event.target
     const val = pressedButton.getAttribute('index')
+    
     if (val === 'new') {
       // create a new document
       const newDoc = new Y.Text()
@@ -188,19 +170,6 @@ window.addEventListener('load', () => {
   inputElement.value = DoUsername.generate(15)
   setUsername()
 
-
-
-
-  //const binding = new QuillBinding(ytext, editor, awareness)
-
-  /*
-  // Define user name and user name
-  // Check the quill-cursors package on how to change the way cursors are rendered
-  provider.awareness.setLocalStateField('user', {
-    name: 'Typing Jimmy',
-    color: 'blue'
-  })
-  */
 
   const connectBtn = document.getElementById('y-connect-btn')
   connectBtn.addEventListener('click', () => {
