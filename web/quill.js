@@ -32,8 +32,7 @@ window.addEventListener('load', () => {
   })
 
   provider.on('status', event => {
-    document.querySelector('#connStatus').innerHTML = event.status
-    console.log("asdfasdf", event)
+    document.querySelector('#connStatus').innerHTML = event.status    
   })
   offlineProvider.on('synced', (data) => {
     console.log('content from the database is loaded', data)
